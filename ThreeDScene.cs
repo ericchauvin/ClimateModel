@@ -36,7 +36,6 @@ namespace ClimateModel
     {
     MForm = UseForm;
 
-    // RefFrame = new ReferenceFrame( MForm, Main3DGroup );
     SolarS = new SolarSystem( MForm, Main3DGroup );
 
     SetupCamera();
@@ -315,110 +314,6 @@ namespace ClimateModel
 
 
 
-/*
-  private void MakeSurface()
-    {
-    try
-    {
-    MeshGeometry3D TriSurface = new MeshGeometry3D();
-
-    // Texture Coordinates:
-    // https://msdn.microsoft.com/en-us/library/system.windows.media.media3d.meshgeometry3d.texturecoordinates(v=vs.110).aspx
-
-    // For texture coordinates in 2D "Bitmap image
-    // space", so to speak, Y starts at the top and
-    // goes downward.
-    Point TopLeft = new Point( 0, 0 );
-    Point BottomRight = new Point( 1, 1 );
-    Point TopRight = new Point( 1, 0 );
-    Point BottomLeft = new Point( 0, 1 );
-
-    // In this 3D space Y goes upward.
-    Point3D TopLeft3D = new Point3D( 0, 1, 0 );
-    Point3D BottomRight3D = new Point3D( 1, 0, 0 );
-    Point3D TopRight3D = new Point3D( 1, 1, 0 );
-    Point3D BottomLeft3D = new Point3D( 0, 0, 0 );
-
-    TriSurface.Positions.Add( BottomLeft3D );
-    TriSurface.Positions.Add( BottomRight3D );
-    TriSurface.Positions.Add( TopLeft3D );
-    TriSurface.Positions.Add( TopRight3D );
-
-    TriSurface.TextureCoordinates.Add( BottomLeft );
-    TriSurface.TextureCoordinates.Add( BottomRight );
-    TriSurface.TextureCoordinates.Add( TopLeft );
-    TriSurface.TextureCoordinates.Add( TopRight );
-
-    // Counterclockwise winding goes toward the viewer.
-    TriSurface.TriangleIndices.Add( 0 );
-    TriSurface.TriangleIndices.Add( 1 );
-    TriSurface.TriangleIndices.Add( 2 );
-
-    TriSurface.TriangleIndices.Add( 1 );
-    TriSurface.TriangleIndices.Add( 3 );
-    TriSurface.TriangleIndices.Add( 2 );
-
-    // Positive Z values go toward the viewer.
-    // So the normal is toward the viewer.
-    Vector3D BasicNormal = new Vector3D( 0, 0, 1 );
-    TriSurface.Normals.Add( BasicNormal );
-    TriSurface.Normals.Add( BasicNormal );
-    TriSurface.Normals.Add( BasicNormal );
-    TriSurface.Normals.Add( BasicNormal );
-
-    DiffuseMaterial SolidMat = new DiffuseMaterial();
-    // SolidMat.Brush = Brushes.Blue;
-    SolidMat.Brush = SetTextureImageBrush();
-
-    GeometryModel3D GeoMod = new GeometryModel3D();
-    GeoMod.Geometry = TriSurface;
-    GeoMod.Material = SolidMat;
-
-    Main3DGroup.Children.Add( GeoMod );
-
-    }
-    catch( Exception Except )
-      {
-      MForm.ShowStatus( "Exception in ThreeDScene.MakeSurface(): " + Except.Message );
-      return;
-      }
-    }
-*/
-
-
-/*
-  private ImageBrush SetTextureImageBrush()
-    {
-    // Imaging Overview:
-    // https://docs.microsoft.com/en-us/dotnet/framework/wpf/graphics-multimedia/imaging-overview
-
-    // Imaging Namespace:
-    // https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.imaging?view=netframework-4.7.1
-
-    // ImageDrawing:
-    // https://docs.microsoft.com/en-us/dotnet/api/system.windows.media.imagedrawing?view=netframework-4.7.1
-
-    BitmapImage BMapImage = new BitmapImage();
-
-    // Things have to be in this Begin-end block.
-    BMapImage.BeginInit();
-
-    BMapImage.UriSource = new Uri( "C:\\Eric\\ClimateModel\\bin\\Release\\earth.jpg" );
-    // BMapImage.UriSource = new Uri( "C:\\Eric\\ClimateModel\\bin\\Release\\TestImage.jpg" );
-
-    // BMapImage.DecodePixelWidth = 200;
-
-    BMapImage.EndInit();
-
-    // ImageBrush:
-    // https://msdn.microsoft.com/en-us/library/system.windows.media.imagebrush(v=vs.110).aspx
-    ImageBrush ImgBrush = new ImageBrush();
-    ImgBrush.ImageSource = BMapImage;
-    return ImgBrush;
-    }
-*/
-
-
   internal void RotateView()
     {
     SolarS.RotateView();
@@ -443,9 +338,9 @@ namespace ClimateModel
                      0,  // LookAt vector.
                      -1,
                      0,
+                     0, // Up vector.
                      0,
-                     0,
-                     1 );
+                     1 ); // Up is with Z = 1.
 
     MoveForwardBack( -30.0 );
     }
