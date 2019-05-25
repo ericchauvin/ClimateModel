@@ -1,9 +1,10 @@
 // Copyright Eric Chauvin 2018 - 2019.
 
 
-// Quaternions and spatial rotation:
-// https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation
-
+// There is a good book about the history of vectors and
+// quaternions called A History of Vector Analysis, by Michael
+// Crowe.  It describes how modern vector analysis evolved,
+// and how Hamilton's ideas about quaternions evolved.
 
 
 using System;
@@ -233,12 +234,6 @@ namespace ClimateModel
   // With two regular complex numbers you do:
   //      (a + bi)(c + di) =
   //      ac + adi + bic + bidi
-  // Notice that c and di stay on the right side.
-  // But the real part of bidi can apparently
-  // commute to bdii and the ii multiplied together
-  // equals -1.  bd(ii) = bd(-1) = -bd.
-  // But complex numbers are Commutative and
-  // Quaternions are not.
 
   // a1 is like a with subscript 1.
 
@@ -258,8 +253,6 @@ namespace ClimateModel
   // c1za2x + c1zb2y + c1zc2z + c1zw2 +
   // w1a2x + w1b2y + w1c2z + w1w2
 
-  // Do the real parts commute within each of these
-  // terms?
   // a1a2xx + a1b2xy + a1c2xz + a1w2x +
   // b1a2yx + b1b2yy + b1c2yz + b1w2y +
   // c1a2zx + c1b2zy + c1c2zz + c1w2z +
@@ -304,9 +297,13 @@ namespace ClimateModel
     // Result.W = -a1a2 + -b1b2 + -c1c2 + w1w2;
 
     QuaternionRec Result;
+
+    // The vector Cross Product part:
     Result.X =  (L.X * R.W) +  (L.W * R.X) +  (L.Y * R.Z) + (-L.Z * R.Y);
     Result.Y = (-L.X * R.Z) +  (L.Y * R.W) +  (L.Z * R.X) +  (L.W * R.Y);
     Result.Z =  (L.X * R.Y) + (-L.Y * R.X) +  (L.Z * R.W) +  (L.W * R.Z);
+
+    // Almost the same as the vector Dot Product.
     Result.W = (-L.X * R.X) + (-L.Y * R.Y) + (-L.Z * R.Z) +  (L.W * R.W);
     return Result;
     }
@@ -391,6 +388,20 @@ namespace ClimateModel
                      QuaternionRec InverseRotationQ,
                      Vector3.Vector StartPoint )
     {
+    // A quaternion rotation is clockwise around a vector
+    // if you are looking down the vector from the origin point.
+    // Like an archer with an arrow in the bow, you are sighting
+    // down the arrow.
+    // Compare this with representing a rotation or a moment
+    // of inertia, or a torque, by using a vector cross product
+    // in a right-handed coordinate system.  It goes in the
+    // right direction like it should.  If the Z axis is pointing
+    // straight toward you then it is the opposite
+    // point of view from what an archer would see when he
+    // is sighting down an arrow in his bow.  That opposite
+    // point of view is a counter-clockwise rotation.
+
+
     QuaternionRec MiddlePoint = MultiplyWithLeftVector3(
                        StartPoint, InverseRotationQ );
     Vector3.Vector Result = MultiplyWithResultVector3(
@@ -398,6 +409,26 @@ namespace ClimateModel
     return Result;
     }
 
+
+
+
+  internal static Vector3.Vector RotationWithSetupDegrees(
+                                  double AngleDegrees,
+                                  QuaternionRec Axis,
+                                  Vector3.Vector InVector )
+    {
+    double Angle = NumbersEC.DegreesToRadians( AngleDegrees );
+
+    QuaternionRec RotationQ = SetAsRotation( Axis, Angle );
+    QuaternionRec InverseRotationQ = Inverse( RotationQ );
+
+    Vector3.Vector ResultPoint = RotateVector3(
+                     RotationQ,
+                     InverseRotationQ,
+                     InVector );
+
+    return ResultPoint;
+    }
 
 
 
