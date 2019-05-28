@@ -31,6 +31,7 @@ namespace ClimateModel
   private string FileName = "";
 
 
+
   public struct JPLRec
     {
     // This would be at midnight Universal Time
@@ -343,7 +344,7 @@ namespace ClimateModel
     // reasonable value.
     long NearestValue = (long)BigDate.GetIndex();
 
-    // This could be a binary search on sorted data.
+    // This should be a binary search on sorted data.
     int NearestIndex = 0;
     for( int Count = 0; Count < JPLRecArrayLast; Count++ )
       {
