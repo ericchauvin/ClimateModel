@@ -30,7 +30,7 @@ namespace ClimateModel
   private EarthSlice[] EarthSliceArray;
   private int LastGraphicsIndex = 0;
   internal double UTCTimeRadians = 0;
-
+  private Vector3.Vector NorthPoleVector;
 
 
 
@@ -41,9 +41,43 @@ namespace ClimateModel
                                 UseName,
                                 JPLFileName )
     {
+    MakeNorthPoleVector();
     AllocateEarthSliceArrays();
-
     GeometryMod = new GeometryModel3D();
+    }
+
+
+
+  private void MakeNorthPoleVector()
+    {
+    // The coordinate system is centered at the barycenter of the
+    // solar system and the X axis goes to the point where Earth
+    // is at the Spring Equinox.  Earth is rotated around that
+    // X axis.
+
+    Vector3.Vector StraightUp;
+    StraightUp.X = 0;
+    StraightUp.Y = 0;
+    StraightUp.Z = 1;
+
+    QuaternionEC.QuaternionRec Axis;
+    Axis.X = 1; // Rotate around the X axis.
+    Axis.Y = 0;
+    Axis.Z = 0;
+    Axis.W = 0;
+
+    NorthPoleVector = QuaternionEC.RotationWithSetupDegrees(
+                              ModelConstants.EarthTiltAngleDegrees,
+                              Axis,
+                              StraightUp );
+
+    }
+
+
+
+  internal Vector3.Vector GetNorthPoleVector()
+    {
+    return NorthPoleVector;
     }
 
 
