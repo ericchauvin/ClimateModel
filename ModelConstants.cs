@@ -124,13 +124,12 @@ namespace ClimateModel
               (2.0d  * Math.PI) / (24 * 60 * 60);
 
 
-  // https://en.wikipedia.org/wiki/Axial_tilt
-
-  internal const double EarthTiltAngle = -23.43677; // -23.43689
+  // See the QuaternionEC.cs file for notes about rotations
+  // with quaternions and why this is a negative angle.
+  // The Earth is tilted around the X axis.
+  internal const double EarthTiltAngleDegrees = -23.43677; // -23.43689
 
 
 
   }
 }
-
-
