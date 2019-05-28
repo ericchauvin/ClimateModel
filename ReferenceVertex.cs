@@ -87,7 +87,7 @@ namespace ClimateModel
     // RotationQ = new QuaternionEC.QuaternionRec();
     // InverseRotationQ = new QuaternionEC.QuaternionRec();
 
-    double Angle = -ModelConstants.EarthTiltAngle;
+    double Angle = ModelConstants.EarthTiltAngleDegrees;
     Angle = NumbersEC.DegreesToRadians( Angle );
 
     QuaternionEC.QuaternionRec Axis;
