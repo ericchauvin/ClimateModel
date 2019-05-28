@@ -1,6 +1,8 @@
 // Copyright Eric Chauvin 2018 - 2019.
 
 
+// See the QuaternionEC.cs file for notes.
+
 
 using System;
 
@@ -47,20 +49,22 @@ namespace ClimateModel
 
   internal static Vector Add( Vector Left, Vector Right )
     {
-    Left.X += Right.X;
-    Left.Y += Right.Y;
-    Left.Z += Right.Z;
-    return Left;
+    Vector Result;
+    Result.X = Left.X + Right.X;
+    Result.Y = Left.Y + Right.Y;
+    Result.Z = Left.Z + Right.Z;
+    return Result;
     }
 
 
 
   internal static Vector Subtract( Vector Left, Vector Right )
     {
-    Left.X -= Right.X;
-    Left.Y -= Right.Y;
-    Left.Z -= Right.Z;
-    return Left;
+    Vector Result;
+    Result.X = Left.X - Right.X;
+    Result.Y = Left.Y - Right.Y;
+    Result.Z = Left.Z - Right.Z;
+    return Result;
     }
 
 
@@ -158,7 +162,28 @@ namespace ClimateModel
 
 
 
+  internal static Vector CrossProduct( Vector Left,
+                                       Vector Right )
+    {
+    // i x j = k
+    // j x k = i
+    // k x i = j
+
+    Vector Result;
+
+    Result.X = (Left.Y * Right.Z) -
+               (Left.Z * Right.Y);
+
+    Result.Y = (Left.Z * Right.X) -
+               (Left.X * Right.Z);
+
+    Result.Z = (Left.X * Right.Y) -
+               (Left.Y * Right.X);
+
+    return Result;
+    }
+
+
+
   }
 }
-
-
