@@ -5,6 +5,9 @@
 // JPL Horizons:
 // https://ssd.jpl.nasa.gov/horizons.cgi
 
+// JPL news:
+// https://ssd.jpl.nasa.gov/?horizons_news
+
 // Use settings like this:
 // Ephemeris Type: VECTORS
 // Coordinate Origin: Solar System Barycenter (SSB) [500@0]
