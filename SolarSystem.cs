@@ -1,6 +1,51 @@
 // Copyright Eric Chauvin 2018 - 2019.
 
 
+// The coordinates (the reference frame) used here are centered
+// at the Solar System Barycenter.  The coordinates match up with
+// NASA's JPL Horizon's Ephemeris data.  (See the JPLHorizonsData.cs
+// file.)  The X, Y plane is mostly in the ecliptic plane.
+// Both the Earth and the Sun have Z coordinates that are not
+// zero, so they are not exactly in that Zero-Z plane.  But Z
+// coordinates for all the planets are relatively small
+// compared with the X, Y coordinates.
+
+// It is a rectangular coordinate system in meters and seconds.
+// It is a right-handed coordinate system.
+
+// JPL data uses the International Celestial Reference Frame
+// ICRF/J2000.0.
+
+// On May 29th 2019 the velocity of the Earth in this system was
+// Velocity.X: 27,081.0
+// Velocity.Y: -11,385.5
+// Velocity.Z: 0.9
+
+// It is moving mostly in the positive X direction as it
+// approaches the Summer Solstice on June 21st.  But the Earth's
+// X coordinate on May 29th was still a negative number.
+// Position.X: -57,625,169,877.3
+
+// If you think of the X coordinate line as going from left to
+// right, and the Y coordinate line as being vertical, then
+// at the Vernal (Spring) Equinox back on March 20th 2019, the
+// Y coordinate was zero, and it was as far to the left (negative)
+// on the X coordinate line as it goes.  But on June 21st at
+// the Summer Solstice the X value will be zero and the Y coordinate
+// will be as far negative as it goes.
+
+// The Earth is tilted about 23 degrees around the X axis.
+// The Positive direction of the X axis at the Vernal Equinox
+// is from the Earth toward the sun.  Because of how rotations
+// are defined around an axis, it is a negative angle of tilt.
+// The Earth is tilted about negative 23 degrees around the X axis.
+
+// See the QuaternionEC.cs file for notes about the direction
+// of rotation around an axis.
+
+
+
+
 using System;
 using System.Text;
 using System.Windows.Media;
@@ -78,6 +123,7 @@ namespace ClimateModel
                             0,
                             0 );
 
+
     }
 */
 
@@ -90,19 +136,6 @@ namespace ClimateModel
     {
     SunTime.Copy( SetTime );
 
-    // The time difference from the Spring Equinox
-    // to the SetTime.
-    double TimeDiffSeconds = SpringTime.GetSecondsDifference( SunTime );
-
-    // "Earth's orbit has an eccentricity of 0.0167."
-
-    // One sidereal year.
-    // Earth orbit in days: 365.256
-
-    // Earth's orbit:
-    //                      b  m  t
-    // Aphelion:          152100000000
-    // Perihelion:        147095000000
     }
 */
 
@@ -227,7 +260,7 @@ Earth rotation angle and all that.
     PlanetSphere MoonAxis = new PlanetSphere(
                 MForm, "Moon Axis", false, "" );
 
-    MoonAxis.Radius = 300000d;
+    MoonAxis.Radius = 200000d;
     MoonAxis.Mass = 0;
     MoonAxis.TextureFileName = "C:\\Eric\\ClimateModel\\bin\\Release\\TestImage2.jpg";
     AddSpaceObject( MoonAxis );
@@ -237,7 +270,7 @@ Earth rotation angle and all that.
     PlanetSphere SolarNorth = new PlanetSphere(
                 MForm, "Solar North", false, "" );
 
-    SolarNorth.Radius = 200000d;
+    SolarNorth.Radius = 100000d;
     SolarNorth.Mass = 0;
     SolarNorth.TextureFileName = "C:\\Eric\\ClimateModel\\bin\\Release\\TestImage2.jpg";
     AddSpaceObject( SolarNorth );
@@ -260,9 +293,6 @@ Earth rotation angle and all that.
     NorthPole.Position = NorthPolePos;
 
 
-    // The moon's orbit has an inclination about 5.15 degrees
-    // from the ecliptic plane.  There would be an eclipse when
-    // the moon is in the ecliptic plane.
     // Set the moon axis.
     Vector3.Vector MoonFirstPosition = Moon.Position;
     // Subtract the Earth's position so this is just in relation
