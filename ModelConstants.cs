@@ -124,11 +124,12 @@ namespace ClimateModel
               (2.0d  * Math.PI) / (24 * 60 * 60);
 
 
-  // See the QuaternionEC.cs file for notes about rotations
-  // with quaternions and why this is a negative angle.
-  // The Earth is tilted around the X axis.
-  internal const double EarthTiltAngleDegrees = -23.43677; // -23.43689
+  // See the QuaternionEC.cs and SolarSystem.cs files for notes
+  // about rotations with quaternions and why this is a negative
+  // angle.
+  internal const double EarthTiltAngleDegrees = -23.439;
 
+  // From JPL Earth file: Obliquity to orbit, deg  = 23.4392911
 
 
   }
