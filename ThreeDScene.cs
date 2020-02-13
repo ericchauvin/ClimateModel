@@ -87,7 +87,7 @@ namespace ClimateModel
   internal void SetCameraToOriginal()
     {
     PCamera.Position = new Point3D( 0, 15, 0 );
-    PCamera.LookDirection = new Vector3D( 0, -1, 0 );
+    PCamera.LookDirection = new Vector3D( 1, 0, 0 );
     // Up is toward the North Pole.
     PCamera.UpDirection = new Vector3D( 0, 0, 1 );
     }
@@ -331,11 +331,15 @@ namespace ClimateModel
   internal void MoveToEarthView()
     {
     Vector3.Vector Pos = SolarS.GetEarthScaledPosition();
-
+    // Spring Equinox 2020 is March 19.
+    // Positive X direction is toward the sun (from Earth)
+    // on the day of Spring Equinox.
+    // So LookAt direction of -X means from the sun toward
+    // the Earth on Spring Equinox.
     SetCameraTo( Pos.X,
                  Pos.Y,
                  Pos.Z,
-                     1,  // LookAt vector.
+                     -1,  // LookAt vector.
                      0,
                      0,
                      0, // Up vector.
